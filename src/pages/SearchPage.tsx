@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Tooltip } from 'react-tooltip';
 import StationSelect from '../components/StationSelect';
 import StationInfoContext from '../contexts/StationInfoContext';
 
@@ -12,6 +13,8 @@ const SearchPage: React.FC = () => {
     const performSearch = () => {
         window.location.href = `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${originStation}/${destinationStation}/#LiveDepResults`;
     };
+
+    const inputValid = stationInfoContext.crsList.includes(originStation) && stationInfoContext.crsList.includes(destinationStation);
 
     return (
         <div>
@@ -29,10 +32,17 @@ const SearchPage: React.FC = () => {
             <button
                 type = { 'submit' }
                 onClick = { performSearch }
-                disabled = { stationInfoContext.crsList.includes(originStation) || stationInfoContext.crsList.includes(destinationStation) }
+                disabled = { !inputValid }
+                data-tooltip-id = { inputValid? '' : 'invalid-advice-tooltip' }
             >
                 Search...
             </button>
+            <Tooltip
+                id =  'invalid-advice-tooltip'
+                place = 'bottom'
+                variant = 'info'
+                content = 'Please select both valid origin and destination stations.'
+            />
         </div>
     );
 };
