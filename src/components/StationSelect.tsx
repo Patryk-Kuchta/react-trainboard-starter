@@ -13,6 +13,11 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
 
     const elementId = label.toLowerCase();
 
+    if (stationInfoContext.stations.length === 0) {
+        // reset during loading to prevent unexpected behaviour
+        setSelection('');
+    }
+
     return <>
         <label htmlFor = { elementId }>{label} station:</label>
         <select
