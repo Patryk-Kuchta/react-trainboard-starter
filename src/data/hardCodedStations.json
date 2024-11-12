@@ -1,0 +1,67 @@
+[
+  {
+    "id": 3235,
+    "name": "Edinburgh",
+    "aliases": [
+      "Waverley"
+    ],
+    "crs": "EDB",
+    "nlc": "9328",
+    "latitude": 55.95238716,
+    "longitude": -3.188221921,
+    "isGroupStation": false,
+    "isSilverSeekStation": true
+  },
+  {
+    "id": 4691,
+    "name": "London Kings Cross",
+    "aliases": [
+      "Kings Cross",
+      "Kings X",
+      "Kings Cross"
+    ],
+    "crs": "KGX",
+    "nlc": "6121",
+    "latitude": 51.53088842,
+    "longitude": -0.122921342,
+    "isGroupStation": false,
+    "isSilverSeekStation": true
+  },
+  {
+    "id": 5313,
+    "name": "Manchester Piccadilly",
+    "aliases": [
+      "Piccadilly (Manchester)"
+    ],
+    "crs": "MAN",
+    "nlc": "2968",
+    "latitude": 53.47671998,
+    "longitude": -2.228977818,
+    "isGroupStation": false,
+    "isSilverSeekStation": false
+  },
+  {
+    "id": 6523,
+    "name": "Salford Crescent",
+    "aliases": [
+      "Salford University"
+    ],
+    "crs": "SLD",
+    "nlc": "2794",
+    "latitude": 53.48659869,
+    "longitude": -2.275750605,
+    "isGroupStation": false,
+    "isSilverSeekStation": false
+  },
+  {
+    "id": 14392,
+    "name": "Glasgow Central or Glasgow Queen Street",
+    "aliases": [],
+    "crs": "GLW",
+    "nlc": "0433",
+    "latitude": null,
+    "longitude": null,
+    "isGroupStation": true,
+    "isSilverSeekStation": false
+  }
+]
