@@ -16,8 +16,10 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
             name = { elementId }
             id = { elementId }
             onChange = { (event) => {
-                setSelection(event.target.value);} }
+                setSelection(event.target.value);
+            } }
         >
+            <option value = "">Select...</option>
             {
                 hardCodedStations.map((station, key) => {
                     return (

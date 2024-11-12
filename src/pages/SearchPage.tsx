@@ -3,8 +3,8 @@ import StationSelect from '../components/StationSelect';
 
 const SearchPage: React.FC = () => {
 
-    const [originStation, setOriginStation] = useState('hi!!!!!!');
-    const [destinationStation, setDestinationStation] = useState('helo');
+    const [originStation, setOriginStation] = useState('');
+    const [destinationStation, setDestinationStation] = useState('');
 
     const performSearch = () => {
         window.location.href = `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${originStation}/${destinationStation}/#LiveDepResults`;
@@ -23,7 +23,11 @@ const SearchPage: React.FC = () => {
                 invalidSelections = { [originStation] }
                 setSelection = { setDestinationStation }
             />
-            <button type = { 'submit' } onClick = { performSearch }>
+            <button
+                type = { 'submit' }
+                onClick = { performSearch }
+                disabled = { originStation.length !== 3 || destinationStation.length !== 3 } // TODO proper validation
+            >
                 Search...
             </button>
         </div>
