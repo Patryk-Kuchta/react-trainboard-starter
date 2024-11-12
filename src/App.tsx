@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Station from './components/Station';
-import Stations from './components/Stations';
+import SearchPage from './pages/SearchPage';
+import StationsPage from './pages/StationsPage';
 
 const App = () => (
     <BrowserRouter>
@@ -11,11 +12,16 @@ const App = () => (
                 <Route path = "/stations">
                     <Route path = ":id" element = { <Station/> }/>
        
-                    <Route index element = { <Stations/> }/>
+                    <Route index element = { <StationsPage/> }/>
+                </Route>
+                <Route path = "/search">
+                    <Route index element = { <SearchPage/> }/>
                 </Route>
             </Routes>
             <footer>
+                <hr></hr>
                 <Link to = "/stations">Stations</Link>
+                <Link to = "/search">Search</Link>
             </footer>
         </div>
     </BrowserRouter>

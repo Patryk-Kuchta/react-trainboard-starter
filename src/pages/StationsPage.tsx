@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchStations } from '../helpers/ApiCallHelper';
 
-const Stations: React.FC = () => {
+const StationsPage: React.FC = () => {
 
     const [allStations, setAllStations] = useState([]);
 
@@ -21,4 +21,4 @@ const Stations: React.FC = () => {
     );
 };
 
-export default Stations;
+export default StationsPage;
