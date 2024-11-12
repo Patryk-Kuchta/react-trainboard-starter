@@ -18,7 +18,7 @@ const SearchPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Find you next journey...</h1>
+            <h1>Find your next journey...</h1>
             <StationSelect
                 label = { 'Origin' }
                 invalidSelections = { [destinationStation] }
