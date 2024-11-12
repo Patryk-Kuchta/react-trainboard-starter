@@ -27,6 +27,7 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
                 setSelection(event.target.value);
             } }
             disabled = { stationInfoContext.stations.length === 0 }
+            data-testid = { elementId }
         >
             {
                 stationInfoContext.stations.length > 0?
