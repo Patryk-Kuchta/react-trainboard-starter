@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import StationSelect from '../components/StationSelect';
+import StationInfoContext from '../contexts/StationInfoContext';
 
 const SearchPage: React.FC = () => {
+
+    const stationInfoContext = useContext(StationInfoContext);
 
     const [originStation, setOriginStation] = useState('');
     const [destinationStation, setDestinationStation] = useState('');
@@ -26,7 +29,7 @@ const SearchPage: React.FC = () => {
             <button
                 type = { 'submit' }
                 onClick = { performSearch }
-                disabled = { originStation.length !== 3 || destinationStation.length !== 3 } // TODO proper validation
+                disabled = { stationInfoContext.crsList.includes(originStation) || stationInfoContext.crsList.includes(destinationStation) }
             >
                 Search...
             </button>
