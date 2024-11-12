@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import hardCodedStations from '../data/hardCodedStations.json';
+import React, { FC, useContext } from 'react';
+import StationInfoContext from '../contexts/StationInfoContext';
 
 type StationSelectInput = {
     label: string;
@@ -8,6 +8,9 @@ type StationSelectInput = {
 }
 
 const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setSelection }) => {
+
+    const stationInfoContext = useContext(StationInfoContext);
+
     const elementId = label.toLowerCase();
 
     return <>
@@ -18,21 +21,32 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
             onChange = { (event) => {
                 setSelection(event.target.value);
             } }
+            disabled = { stationInfoContext.stations.length === 0 }
         >
-            <option value = "">Select...</option>
             {
-                hardCodedStations.map((station, key) => {
-                    return (
-                        <option
-                            value = { station.crs }
-                            key = { key }
-                            disabled = { invalidSelections.includes(station.crs) }
-                        >
-                            {station.name}
-                        </option>);
-                },
-                )
+                stationInfoContext.stations.length > 0?
+                    <>
+                        <option value = "">Select...</option>
+                        {
+                            stationInfoContext.stations.map((station, key) => {
+                                return (
+                                    <option
+                                        value = { station.crs }
+                                        key = { key }
+                                        disabled = { invalidSelections.includes(station.crs) }
+                                    >
+                                        {station.name}
+                                    </option>);
+                            },
+                            )
+                        }
+                    </>
+                    :
+                    <>
+                        <option value = "">Loading Stations...</option>
+                    </>
             }
+
         </select>
     </>;
 };

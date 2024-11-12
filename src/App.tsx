@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Station from './components/Station';
+import { StationInfoContextProvider } from './contexts/StationInfoContext';
 import SearchPage from './pages/SearchPage';
 import StationsPage from './pages/StationsPage';
 
@@ -15,7 +16,11 @@ const App = () => (
                     <Route index element = { <StationsPage/> }/>
                 </Route>
                 <Route path = "/search">
-                    <Route index element = { <SearchPage/> }/>
+                    <Route index element = {
+                        <StationInfoContextProvider>
+                            <SearchPage/>
+                        </StationInfoContextProvider>
+                    }/>
                 </Route>
             </Routes>
             <footer>
