@@ -3,9 +3,9 @@ import moment, { Moment } from 'moment';
 
 enum Warning {
     NoWarning,
-    NoSelection,
-    InvalidSelection,
-    PastSelection
+    NoSelection = 'no date is selected.',
+    InvalidSelection = 'the selected date is not a valid date.',
+    PastSelection = 'the date selected is in the past'
 }
 
 type FutureDateSelectPrompts = {
@@ -50,11 +50,13 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
 
     };
 
+    const warnUser = currentWarning !== Warning.NoWarning;
+
     return (
         <div>
             <div
                 id = "warning"
-                style = { { display: currentWarning !== Warning.NoWarning ? 'block' : 'none' } }
+                style = { { display: warnUser ? 'block' : 'none' } }
             >
                 {'Please '}
                 <span style = { { fontWeight: currentWarning === Warning.NoSelection ? 'bold': 'normal' } }>
@@ -71,7 +73,7 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
 
             <input
                 ref = { inputRef }
-                aria-label = "Date and time"
+                aria-label = { warnUser? `The date is invalid because ${currentWarning}` : 'Valid date selected' }
                 type = "datetime-local"
                 onChange = { handleChange }
             />
