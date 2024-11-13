@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import FutureDateSelect from '../components/FutureDateSelect';
 import StationSelect from '../components/StationSelect';
 import { StationInfoContext } from '../contexts/StationInfoContext';
 
@@ -40,6 +41,7 @@ const SearchPage: React.FC = () => {
                     invalidSelections = { [originStation] }
                     setSelection = { setDestinationStation }
                 />
+                <FutureDateSelect/>
                 <button
                     type = { 'submit' }
                     onClick = { performSearch }
