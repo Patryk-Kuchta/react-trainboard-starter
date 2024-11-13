@@ -23,9 +23,13 @@ const SearchPage: React.FC = () => {
         originStation !== destinationStation;
 
     return (
-        <div>
+        <div
+            id = { 'form' }
+            style = { { display: 'flex', flexDirection: 'column', maxWidth: '600px', margin: '0 auto' } }
+        >
             <h1 id = "search-title">Find your next journey...</h1>
             <main role = "main" aria-labelledby = "search-title">
+                <h1>Find your next journey...</h1>
                 <StationSelect
                     label = { 'Origin' }
                     invalidSelections = { [destinationStation] }
@@ -42,7 +46,7 @@ const SearchPage: React.FC = () => {
                     disabled = { !inputValid }
                     data-tooltip-id = { inputValid? '' : 'invalid-advice-tooltip' }
                 >
-                Search...
+                    Search...
                 </button>
                 <Tooltip
                     id =  'invalid-advice-tooltip'

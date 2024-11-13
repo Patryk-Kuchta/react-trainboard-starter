@@ -20,7 +20,7 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
         }
     }, [stationInfoContext.stations.length, setSelection]);
 
-    return <>
+    return <div style = { { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' } }>
         <label htmlFor = { elementId }>{label} station:</label>
         <select
             name = { elementId }
@@ -59,7 +59,7 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
             }
 
         </select>
-    </>;
+    </div>;
 };
 
 export default StationSelect;
