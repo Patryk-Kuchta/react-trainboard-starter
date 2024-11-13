@@ -7,16 +7,25 @@ type FaresResponseType = {
     outboundJourneys: DepartureInfo[];
 }
 
+type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
+
 type DepartureInfo = {
     departureTime: string;
     arrivalTime: string;
-    status: 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
+    status: Status;
     legs: {'legId': string }[];
     isFastestJourney: boolean;
     isOvertaken: boolean;
 };
 
 const SearchPage: FC = () => {
+
+    const statusToEmoji: Map<Status, string> = new Map([
+        ['normal', '✅'],
+        ['delayed', '⏳'],
+        ['cancelled', '❌'],
+        ['fully_reserved', '🚫'],
+    ]);
 
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
@@ -37,31 +46,44 @@ const SearchPage: FC = () => {
             style = { { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' } }
         >
             <SearchForm submitSearch = { submitSearch } />
-            <div>
+            <div
+                style = { { display: 'flex', flexDirection: 'column', margin: '0 auto' } }
+            >
                 {searchResults?
                     <>
+                        <h1>Search Results:</h1>
+
+                        <p>Departure Time ➡️ Arrival Time</p>
                         {
                             searchResults.outboundJourneys.map((journey, key) => {
                                 const departure = moment(journey.departureTime);
                                 const origin = moment(journey.arrivalTime);
 
                                 return (
-                                    <div key = { key }>
-                                        {departure.format('HH:mm:')}
+                                    <div
+                                        className = { 'journeyDisplay' }
+                                        key = { key }
+                                        style = { { border: 'solid', margin: '0.5em', padding: '0.5em' } }
+                                    >
+                                        {departure.format('HH:mm')}
 
-                                        {departure.format('DD MMM YY')}
+                                        <span style = { { fontSize: '0.7em' } }> {departure.format('DD MMM YY')}</span>
 
-                                        {'->'}
+                                        ➡️
 
-                                        {origin.format('HH:mm:')}
+                                        {origin.format('HH:mm')}
 
-                                        {origin.format('DD MMM YY')}
+                                        <span style = { { fontSize: '0.7em' } }> {departure.format('DD MMM YY')}</span>
 
-                                        {'|'}
+                                        <hr/>
 
-                                        {journey.status}
+                                        Status: {statusToEmoji.get(journey.status)}
 
-                                        {journey.legs.length === 1? 'Direct' : `${journey.legs.length - 1} change`}
+                                        <hr/>
+
+                                        <b>
+                                            {journey.legs.length === 1 ? 'Direct' : `${journey.legs.length - 1} change`}
+                                        </b>
 
                                     </div>
                                 );
