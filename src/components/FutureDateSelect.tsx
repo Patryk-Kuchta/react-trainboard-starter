@@ -57,29 +57,34 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
 
     return (
         <div>
+            <div id = { 'datetime_picker_container' }>
+                <label htmlFor = { 'datetime_picker' }>Departure date and time: </label>
+                <input
+                    id = { 'datetime_picker' }
+                    data-testid = { 'datetime_picker' }
+                    ref = { inputRef }
+                    aria-label = { warnUser ? `The date is invalid because ${currentWarning}` : 'Valid date selected' }
+                    type = "datetime-local"
+                    onChange = { handleChange }
+                />
+            </div>
+
             <div
                 id = "warning"
                 style = { { display: warnUser ? 'block' : 'none' } }
             >
                 {'Please '}
-                <span style = { { fontWeight: currentWarning === Warning.NoSelection ? 'bold': 'normal' } }>
+                <span style = { { fontWeight: currentWarning === Warning.NoSelection ? 'bold' : 'normal' } }>
                    select
                 </span>
                 {' a '}
-                <span style = { { fontWeight: currentWarning === Warning.InvalidSelection ? 'bold': 'normal' } }>
+                <span style = { { fontWeight: currentWarning === Warning.InvalidSelection ? 'bold' : 'normal' } }>
                     valid date
                 </span>
-                <span style = { { fontWeight: currentWarning === Warning.PastSelection ? 'bold': 'normal' } }>
+                <span style = { { fontWeight: currentWarning === Warning.PastSelection ? 'bold' : 'normal' } }>
                     {' in the future. '}
                 </span>
             </div>
-
-            <input
-                ref = { inputRef }
-                aria-label = { warnUser? `The date is invalid because ${currentWarning}` : 'Valid date selected' }
-                type = "datetime-local"
-                onChange = { handleChange }
-            />
         </div>
     );
 };
