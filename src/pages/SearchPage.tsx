@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import { Moment } from 'moment/moment';
 import FutureDateSelect from '../components/FutureDateSelect';
 import StationSelect from '../components/StationSelect';
 import { StationInfoContext } from '../contexts/StationInfoContext';
@@ -10,6 +11,7 @@ const SearchPage: React.FC = () => {
 
     const [originStation, setOriginStation] = useState('');
     const [destinationStation, setDestinationStation] = useState('');
+    const [selectedDate, setSelectedDate] = useState<Moment | null>(null);
 
     const performSearch = () => {
         try {
@@ -19,9 +21,10 @@ const SearchPage: React.FC = () => {
         }
     };
 
-    const inputValid = stationInfoContext.crsList.includes(originStation) &&
-        stationInfoContext.crsList.includes(destinationStation) &&
-        originStation !== destinationStation;
+    const inputValid = (stationInfoContext.crsList.includes(originStation)
+                        && stationInfoContext.crsList.includes(destinationStation)
+                        && originStation !== destinationStation
+                        && selectedDate);
 
     return (
         <div
@@ -41,7 +44,9 @@ const SearchPage: React.FC = () => {
                     invalidSelections = { [originStation] }
                     setSelection = { setDestinationStation }
                 />
-                <FutureDateSelect/>
+                <FutureDateSelect
+                    setSelectedDate = { setSelectedDate }
+                />
                 <button
                     type = { 'submit' }
                     onClick = { performSearch }
