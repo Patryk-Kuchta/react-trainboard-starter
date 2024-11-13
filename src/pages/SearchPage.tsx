@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import moment from 'moment';
+import '../style/SearchPage.scss';
 import SearchForm from '../components/SearchForm';
 import { getParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
@@ -43,11 +44,10 @@ const SearchPage: FC = () => {
     return (
         <div
             id = { 'search_page' }
-            style = { { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' } }
         >
             <SearchForm submitSearch = { submitSearch } />
             <div
-                style = { { display: 'flex', flexDirection: 'column', margin: '0 auto' } }
+                id = { 'search_results' }
             >
                 {searchResults?
                     <>
@@ -63,17 +63,16 @@ const SearchPage: FC = () => {
                                     <div
                                         className = { 'journeyDisplay' }
                                         key = { key }
-                                        style = { { border: 'solid', margin: '0.5em', padding: '0.5em' } }
                                     >
                                         {departure.format('HH:mm')}
 
-                                        <span style = { { fontSize: '0.7em' } }> {departure.format('DD MMM YY')}</span>
+                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
 
                                         ➡️
 
                                         {origin.format('HH:mm')}
 
-                                        <span style = { { fontSize: '0.7em' } }> {departure.format('DD MMM YY')}</span>
+                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
 
                                         <hr/>
 

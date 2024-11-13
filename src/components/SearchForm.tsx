@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { Moment } from 'moment/moment';
+import '../style/SearchForm.scss';
 import FutureDateSelect from '../components/FutureDateSelect';
 import StationSelect from '../components/StationSelect';
 import { StationInfoContext } from '../contexts/StationInfoContext';
@@ -39,7 +40,6 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
     return (
         <div
             id = { 'form' }
-            style = { { display: 'flex', flexDirection: 'column', maxWidth: '600px', margin: '0 auto' } }
         >
             <h1 id = "search-title">Find your next journey...</h1>
             <main role = "main" aria-labelledby = "search-title">

@@ -1,0 +1,21 @@
+#search_page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.journeyDisplay {
+  border: solid;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.date {
+  font-size: 0.7em;
+}
+
+#search_results {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
