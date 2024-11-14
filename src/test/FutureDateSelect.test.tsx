@@ -38,9 +38,9 @@ it('should trigger a warning when no date or an invalid date is selected', () =>
 it('should trigger a warning if the selected time becomes outdated after some time', () => {
     const { getByTestId, getByText } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
     const dateInput = (getByTestId(test_id) as HTMLInputElement);
-    const futureDate = new Date();
-    futureDate.setMinutes(futureDate.getMinutes() + 5);
-    dateInput.value = futureDate.toISOString().slice(0, 16);
+    const futureDate = moment();
+    futureDate.add(5, 'minutes');
+    dateInput.value = futureDate.format('YYYY-MM-DDTHH:mm');
     fireEvent.change(dateInput, { target: { value: dateInput.value } });
     jest.advanceTimersByTime(900000);
     expect(getByText('in the future.')).toBeInTheDocument();
@@ -50,7 +50,7 @@ it('should initially pass the current date to the parent component via setSelect
     const { getByTestId } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
     const dateInput = (getByTestId(test_id) as HTMLInputElement);
     const currentDate = moment();
-    const formattedDate = currentDate.toISOString().slice(0, 16);
+    const formattedDate = currentDate.format('YYYY-MM-DDTHH:mm');
 
     expect(dateInput.value).toBe(formattedDate);
     expect(mockedSetSelectedDate).toHaveBeenCalledWith(currentDate);
@@ -62,18 +62,18 @@ it('should pass the selected date to the parent component via setSelectedDate', 
     const newDate = moment();
     newDate.add(10, 'minutes').startOf('minute');
 
-    fireEvent.change(dateInput, { target: { value: newDate.toISOString().slice(0, 16) } });
+    fireEvent.change(dateInput, { target: { value: newDate.format('YYYY-MM-DDTHH:mm') } });
 
     // 3rd call because, first the component sets it to be
-    expect(mockedSetSelectedDate.mock.calls[2][0].toISOString()).toBe(newDate.toISOString());
+    expect(mockedSetSelectedDate.mock.calls[2][0].format('YYYY-MM-DDTHH:mm')).toBe(newDate.format('YYYY-MM-DDTHH:mm'));
 });
 
 it('should show a warning when a date more than 15 minutes in the past is selected', () => {
     const { getByTestId, getByText } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
     const dateInput = (getByTestId(test_id) as HTMLInputElement);
-    const invalidDate = new Date();
-    invalidDate.setMinutes(invalidDate.getMinutes() - 16);
-    dateInput.value = invalidDate.toISOString().slice(0, 16);
+    const invalidDate = moment();
+    invalidDate.add(16, 'minutes');
+    dateInput.value = invalidDate.format('YYYY-MM-DDTHH:mm');
     fireEvent.change(dateInput, { target: { value: dateInput.value } });
     expect(getByText('in the future.')).toBeInTheDocument();
 });
