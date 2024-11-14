@@ -1,0 +1,93 @@
+import React, { FC, useEffect, useRef, useState } from 'react';
+import moment, { Moment } from 'moment';
+
+enum Warning {
+    NoWarning = '',
+    NoSelection = 'No date is selected.',
+    InvalidSelection = 'Selected date is not valid.',
+    PastSelection = 'Selected date is in the past.'
+}
+
+type FutureDateSelectPrompts = {
+    setSelectedDate: (date: Moment | null) => void;
+}
+
+const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [currentWarning, setCurrentWarning] = useState(Warning.NoWarning);
+
+    useEffect(() => {
+        const now = moment();
+        const formattedDateTime = now.format('YYYY-MM-DDTHH:mm');
+
+        setSelectedDate(now);
+        
+        if (inputRef.current) {
+            inputRef.current.value = formattedDateTime;
+            inputRef.current.min = formattedDateTime;
+        }
+    }, [setSelectedDate]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedDate = e.target.value;
+        setSelectedDate(null);
+
+        if (selectedDate === '') {
+            setCurrentWarning(Warning.NoSelection);
+        } else {
+            const dateTimeObject = moment(e.target.value, 'YYYY-MM-DDTHH:mm');
+            if (dateTimeObject.isValid()) {
+                const minimalDateTime = moment().subtract(15, 'minutes');
+
+                if (dateTimeObject >= minimalDateTime) {
+                    setSelectedDate(dateTimeObject);
+                    setCurrentWarning(Warning.NoWarning);
+                } else {
+                    setCurrentWarning(Warning.PastSelection);
+                }
+            } else {
+                setCurrentWarning(Warning.InvalidSelection);
+            }
+
+        }
+
+    };
+
+    const warnUser = currentWarning !== Warning.NoWarning;
+
+    return (
+        <div>
+            <div className = { 'datetime_picker_container' }>
+                <label htmlFor = { 'datetime_picker' }>Departure date and time: </label>
+                <input
+                    id = { 'datetime_picker' }
+                    data-testid = { 'datetime_picker' }
+                    ref = { inputRef }
+                    aria-label = { warnUser ? currentWarning : 'Valid date selected' }
+                    aria-invalid = { warnUser }
+                    type = "datetime-local"
+                    onChange = { handleChange }
+                />
+            </div>
+
+            <div
+                className = { `warning-message ${warnUser ? 'visible' : ''}` }
+                role = "alert"
+            >
+                Please
+                <span className = { currentWarning === Warning.NoSelection ? 'date_warning_span highlight': 'date_warning_span' }>
+                   select
+                </span>
+                a
+                <span className = { currentWarning === Warning.InvalidSelection ? 'date_warning_span highlight': 'date_warning_span' }>
+                    valid date
+                </span>
+                <span className = { currentWarning === Warning.PastSelection ? 'date_warning_span highlight': 'date_warning_span' }>
+                    in the future.
+                </span>
+            </div>
+        </div>
+    );
+};
+
+export default FutureDateSelect;

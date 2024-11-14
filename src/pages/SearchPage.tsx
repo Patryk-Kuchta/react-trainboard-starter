@@ -1,56 +1,114 @@
-import React, { useContext, useState } from 'react';
-import { Tooltip } from 'react-tooltip';
-import StationSelect from '../components/StationSelect';
-import { StationInfoContext } from '../contexts/StationInfoContext';
+import React, { FC, useState } from 'react';
+import moment from 'moment';
+import '../style/SearchPage.scss';
+import SearchForm from '../components/SearchForm';
+import { GetParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
-const SearchPage: React.FC = () => {
+type FaresResponseType = {
+    outboundJourneys: DepartureInfo[];
+}
 
-    const stationInfoContext = useContext(StationInfoContext);
+type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
-    const [originStation, setOriginStation] = useState('');
-    const [destinationStation, setDestinationStation] = useState('');
+type DepartureInfo = {
+    departureTime: string;
+    arrivalTime: string;
+    status: Status;
+    legs: {length: number}; // only here to access whether it's direct or not (cast from array)
+    isFastestJourney: boolean;
+    isOvertaken: boolean;
+};
 
-    const performSearch = () => {
+const SearchPage: FC = () => {
+
+    const statusToEmoji: { [key in Status]: string } = {
+        normal: '✅',
+        delayed: '⏳',
+        cancelled: '❌',
+        fully_reserved: '🚫',
+    };
+
+    const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
+    const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
+    const [errorResponse, setErrorResponse] = useState<boolean>(false);
+
+    const submitSearch = async (params : GetParams) => {
+        setAwaitingResponse(true);
+        setSearchResults(null);
         try {
-            window.location.href = `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${originStation}/${destinationStation}/#LiveDepResults`;
+            const response = await makeGetRequestWithParams('v1/fares', params);
+            const body = await response.json();
+            setSearchResults(body as FaresResponseType);
         } catch (error) {
-            console.error('Failed to navigate:', error);
+            console.error('Error fetching search results:', error);
+            setErrorResponse(true);
+        } finally {
+            setAwaitingResponse(false);
         }
     };
 
-    const inputValid = stationInfoContext.crsList.includes(originStation) &&
-        stationInfoContext.crsList.includes(destinationStation) &&
-        originStation !== destinationStation;
-
     return (
-        <div>
-            <h1 id = "search-title">Find your next journey...</h1>
-            <main role = "main" aria-labelledby = "search-title">
-                <StationSelect
-                    label = { 'Origin' }
-                    invalidSelections = { [destinationStation] }
-                    setSelection = { setOriginStation }
-                />
-                <StationSelect
-                    label = { 'Destination' }
-                    invalidSelections = { [originStation] }
-                    setSelection = { setDestinationStation }
-                />
-                <button
-                    type = { 'submit' }
-                    onClick = { performSearch }
-                    disabled = { !inputValid }
-                    data-tooltip-id = { inputValid? '' : 'invalid-advice-tooltip' }
-                >
-                Search...
-                </button>
-                <Tooltip
-                    id =  'invalid-advice-tooltip'
-                    place = 'bottom'
-                    variant = 'info'
-                    content = 'Please select both valid origin and destination stations.'
-                />
-            </main>
+        <div id = { 'search_page' }>
+            <SearchForm submitSearch = { submitSearch } />
+            <div id = { 'search_results' }>
+                {searchResults &&
+                    <>
+                        <h1>Search Results:</h1>
+
+                        <p>Departure Time ➡️ Arrival Time</p>
+                        {
+                            searchResults.outboundJourneys.map((journey, key) => {
+                                const arrival = moment(journey.arrivalTime);
+                                const departure = moment(journey.departureTime);
+
+                                return (
+                                    <div
+                                        className = { 'journeyDisplay' }
+                                        key = { key }
+                                    >
+                                        {departure.format('HH:mm')}
+
+                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+
+                                        ➡️
+
+                                        {arrival.format('HH:mm')}
+
+                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+
+                                        <hr/>
+
+                                        Status: {statusToEmoji[journey.status]}
+
+                                        <hr/>
+
+                                        <b>
+                                            {journey.legs.length === 1 ? 'Direct' : `${journey.legs.length - 1} change`}
+                                        </b>
+
+                                    </div>
+                                );
+                            })
+                        }
+                    </>
+                }
+                {awaitingResponse && !errorResponse &&
+                        <div className = { 'loader' }>
+                            Loading...
+                        </div>
+
+                }
+                {errorResponse &&
+                <>
+                    Error occurred 😭
+                </>
+                }
+                {!errorResponse && !awaitingResponse && !searchResults &&
+                    <div className = { 'await_input' }>
+                        Select the origin and destination and press search!
+                    </div>
+                }
+            </div>
         </div>
     );
 };

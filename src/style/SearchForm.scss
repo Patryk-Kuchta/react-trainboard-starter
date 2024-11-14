@@ -1,0 +1,38 @@
+#search_form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.station_select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.datetime_picker_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.warning-message {
+  color: #7e1111;
+  display: none;
+}
+
+.warning-message.visible {
+  display: block;
+}
+
+.date_warning_span::before {
+  content: " ";
+}
+
+.date_warning_span::after {
+  content: " ";
+}
+
+.date_warning_span.highlight {
+  font-weight: bold;
+}
