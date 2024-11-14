@@ -73,16 +73,16 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
                 id = "warning"
                 style = { { display: warnUser ? 'block' : 'none' } }
             >
-                {'Please '}
-                <span style = { { fontWeight: currentWarning === Warning.NoSelection ? 'bold' : 'normal' } }>
+                Please
+                <span className = { currentWarning === Warning.NoSelection ? 'date_warning_span highlight': 'date_warning_span' }>
                    select
                 </span>
-                {' a '}
-                <span style = { { fontWeight: currentWarning === Warning.InvalidSelection ? 'bold' : 'normal' } }>
+                a
+                <span className = { currentWarning === Warning.InvalidSelection ? 'date_warning_span highlight': 'date_warning_span' }>
                     valid date
                 </span>
-                <span style = { { fontWeight: currentWarning === Warning.PastSelection ? 'bold' : 'normal' } }>
-                    {' in the future. '}
+                <span className = { currentWarning === Warning.PastSelection ? 'date_warning_span highlight': 'date_warning_span' }>
+                    in the future.
                 </span>
             </div>
         </div>

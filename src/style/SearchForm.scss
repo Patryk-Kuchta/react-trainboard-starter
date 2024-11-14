@@ -19,3 +19,15 @@
 #warning {
   color: #860c0c;
 }
+
+.date_warning_span::before {
+  content: " ";
+}
+
+.date_warning_span::after {
+  content: " ";
+}
+
+.date_warning_span.highlight {
+  font-weight: bold;
+}
