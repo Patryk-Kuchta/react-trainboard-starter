@@ -85,12 +85,12 @@ const SearchPage: FC = () => {
                             })
                         }
                     </> : awaitingResponse?
-                        <>
+                        <div className = { 'loader' }>
                             Loading...
-                        </> :
-                        <>
+                        </div> :
+                        <div className = { 'await_input' }>
                             Select the origin and destination and press search!
-                        </>
+                        </div>
                 }
             </div>
         </div>
