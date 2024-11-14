@@ -60,9 +60,12 @@ it('should pass the selected date to the parent component via setSelectedDate', 
     const { getByTestId } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
     const dateInput = (getByTestId(test_id) as HTMLInputElement);
     const newDate = moment();
-    newDate.add(10, 'minutes');
+    newDate.add(10, 'minutes').startOf('minute');
+
     fireEvent.change(dateInput, { target: { value: newDate.toISOString().slice(0, 16) } });
-    expect(mockedSetSelectedDate.mock.calls[2][0]).toHaveBeenCalledWith(newDate);
+
+    // 3rd call because, first the component sets it to be
+    expect(mockedSetSelectedDate.mock.calls[2][0].toISOString()).toBe(newDate.toISOString());
 });
 
 it('should show a warning when a date more than 15 minutes in the past is selected', () => {

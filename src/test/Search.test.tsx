@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import SearchPage from '../pages/SearchPage';
+import SearchForm from '../components/SearchForm';
 import MockStationInfoContextProvider, { mockStations } from './helpers/StationInfoContextMock';
 
 // for the tooltip tests
@@ -10,8 +10,8 @@ global.ResizeObserver = class ResizeObserver {
     disconnect() { /* no-op */ }
 };
 
-render(<MockStationInfoContextProvider keepEmpty = { false }>
-    <SearchPage/>
+const { getByTestId } = render(<MockStationInfoContextProvider keepEmpty = { false }>
+    <SearchForm submitSearch = { jest.fn() }/>
 </MockStationInfoContextProvider>);
 
 test('renders the correct welcome message', () => {
@@ -106,6 +106,15 @@ describe('renders two station selects', () => {
         const searchButton = screen.getByText(/Search.../i);
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeEnabled();
+    });
+
+    describe('with the search button blocked when an invalid date is selected', () => {
+        const dateInput = (getByTestId('datetime_picker') as HTMLInputElement);
+        dateInput.value = '31.02.1998';
+        fireEvent.change(dateInput, { target: { value: dateInput.value } });
+        const searchButton = screen.getByText(/Search.../i);
+        expect(searchButton).toBeInTheDocument();
+        expect(searchButton).toBeDisabled();
     });
 });
 
