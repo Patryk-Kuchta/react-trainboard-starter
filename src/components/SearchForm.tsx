@@ -43,7 +43,6 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
         >
             <h1 id = "search-title">Find your next journey...</h1>
             <main role = "main" aria-labelledby = "search-title">
-                <h1>Find your next journey...</h1>
                 <StationSelect
                     label = { 'Origin' }
                     invalidSelections = { [destinationStation] }
