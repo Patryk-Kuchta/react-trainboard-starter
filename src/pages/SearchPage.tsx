@@ -30,15 +30,21 @@ const SearchPage: FC = () => {
 
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
+    const [errorResponse, setErrorResponse] = useState<boolean>(false);
 
-    const submitSearch = (params : GetParams) => {
+    const submitSearch = async (params : GetParams) => {
         setAwaitingResponse(true);
         setSearchResults(null);
-        makeGetRequestWithParams('v1/fares', params).then((response) =>
-            response.json()).then((body) => {
+        try {
+            const response = await makeGetRequestWithParams('v1/fares', params);
+            const body = await response.json();
             setSearchResults(body as FaresResponseType);
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+            setErrorResponse(true);
+        } finally {
             setAwaitingResponse(false);
-        });
+        }
     };
 
     return (
@@ -84,7 +90,11 @@ const SearchPage: FC = () => {
                                 );
                             })
                         }
-                    </> : awaitingResponse?
+                    </> : awaitingResponse? errorResponse?
+                        <>
+                            Error occurred 😭
+                        </>
+                        :
                         <div className = { 'loader' }>
                             Loading...
                         </div> :
