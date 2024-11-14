@@ -51,7 +51,7 @@ const SearchPage: FC = () => {
         <div id = { 'search_page' }>
             <SearchForm submitSearch = { submitSearch } />
             <div id = { 'search_results' }>
-                {searchResults?
+                {searchResults &&
                     <>
                         <h1>Search Results:</h1>
 
@@ -90,17 +90,23 @@ const SearchPage: FC = () => {
                                 );
                             })
                         }
-                    </> : awaitingResponse? errorResponse?
-                        <>
-                            Error occurred 😭
-                        </>
-                        :
+                    </>
+                }
+                {awaitingResponse && !errorResponse &&
                         <div className = { 'loader' }>
                             Loading...
-                        </div> :
-                        <div className = { 'await_input' }>
-                            Select the origin and destination and press search!
                         </div>
+
+                }
+                {errorResponse &&
+                <>
+                    Error occurred 😭
+                </>
+                }
+                {!errorResponse && !awaitingResponse && !searchResults &&
+                    <div className = { 'await_input' }>
+                        Select the origin and destination and press search!
+                    </div>
                 }
             </div>
         </div>
