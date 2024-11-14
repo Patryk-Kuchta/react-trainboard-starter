@@ -13,7 +13,7 @@ global.ResizeObserver = class ResizeObserver {
 
 const submitSearchMock = jest.fn();
 
-const { getByTestId } = render(<MockStationInfoContextProvider keepEmpty = { false }>
+render(<MockStationInfoContextProvider keepEmpty = { false }>
     <SearchForm submitSearch = { submitSearchMock }/>
 </MockStationInfoContextProvider>);
 
@@ -111,7 +111,7 @@ describe('renders two station selects', () => {
         expect(searchButton).toBeEnabled();
     });
 
-    const dateInput = (getByTestId('datetime_picker') as HTMLInputElement);
+    const dateInput = (screen.getByTestId('datetime_picker') as HTMLInputElement);
 
     describe('with the search button blocked when an invalid date is selected', () => {
         //dateInput.value = '31.02.1998';
