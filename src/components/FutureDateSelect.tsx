@@ -2,10 +2,10 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
 
 enum Warning {
-    NoWarning,
-    NoSelection = 'no date is selected.',
-    InvalidSelection = 'the selected date is not a valid date.',
-    PastSelection = 'the date selected is in the past'
+    NoWarning = '',
+    NoSelection = 'No date is selected.',
+    InvalidSelection = 'Selected date is not valid.',
+    PastSelection = 'Selected date is in the past.'
 }
 
 type FutureDateSelectPrompts = {
@@ -63,7 +63,7 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
                     id = { 'datetime_picker' }
                     data-testid = { 'datetime_picker' }
                     ref = { inputRef }
-                    aria-label = { warnUser ? `The date is invalid because ${currentWarning}` : 'Valid date selected' }
+                    aria-label = { warnUser ? currentWarning : 'Valid date selected' }
                     aria-invalid = { warnUser }
                     type = "datetime-local"
                     onChange = { handleChange }
