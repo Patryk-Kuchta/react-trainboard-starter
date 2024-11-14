@@ -57,21 +57,22 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
 
     return (
         <div>
-            <div id = { 'datetime_picker_container' }>
+            <div className = { 'datetime_picker_container' }>
                 <label htmlFor = { 'datetime_picker' }>Departure date and time: </label>
                 <input
                     id = { 'datetime_picker' }
                     data-testid = { 'datetime_picker' }
                     ref = { inputRef }
                     aria-label = { warnUser ? `The date is invalid because ${currentWarning}` : 'Valid date selected' }
+                    aria-invalid = { warnUser }
                     type = "datetime-local"
                     onChange = { handleChange }
                 />
             </div>
 
             <div
-                id = "warning"
-                style = { { display: warnUser ? 'block' : 'none' } }
+                className = { `warning-message ${warnUser ? 'visible' : ''}` }
+                role = "alert"
             >
                 Please
                 <span className = { currentWarning === Warning.NoSelection ? 'date_warning_span highlight': 'date_warning_span' }>

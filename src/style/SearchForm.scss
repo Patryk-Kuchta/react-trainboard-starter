@@ -11,13 +11,18 @@
   justify-content: space-between;
 }
 
-#datetime_picker_container {
+.datetime_picker_container {
   display: flex;
   justify-content: space-between;
 }
 
-#warning {
-  color: #860c0c;
+.warning-message {
+  color: #7e1111;
+  display: none;
+}
+
+.warning-message.visible {
+  display: block;
 }
 
 .date_warning_span::before {
