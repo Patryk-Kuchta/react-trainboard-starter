@@ -5,7 +5,9 @@
 }
 
 .journeyDisplay {
-  border: solid;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
   margin: 0.5em;
   padding: 0.5em;
 }
