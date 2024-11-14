@@ -25,8 +25,10 @@ const App = () => (
             </Routes>
             <footer>
                 <hr/>
-                <Link to = "/stations">Stations</Link>
-                <Link to = "/search">Search</Link>
+                <nav aria-label = "Main navigation">
+                    <Link to = "/stations">Stations</Link>
+                    <Link to = "/search">Search</Link>
+                </nav>
             </footer>
         </div>
     </BrowserRouter>
