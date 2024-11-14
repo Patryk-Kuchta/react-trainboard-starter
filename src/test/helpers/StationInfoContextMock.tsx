@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import { StationInfoContext } from '../../contexts/StationInfoContext';
+import { StationEntry, StationInfoContext } from '../../contexts/StationInfoContext';
 
 const LONDON_COORDINATES = {
     latitude: 51.5074,
@@ -11,7 +11,7 @@ const MANCHESTER_COORDINATES = {
     longitude: -2.2426,
 };
 
-export const mockStations = [
+export const mockStations: StationEntry[] = [
     {
         id: 1,
         name: 'Station 1',

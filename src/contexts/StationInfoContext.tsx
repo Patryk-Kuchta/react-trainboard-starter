@@ -2,7 +2,7 @@ import React from 'react';
 import { createContext, FC, ReactNode } from 'react';
 import hardCodedStations from '../data/hardCodedStations.json';
 
-type StationEntry = {
+export type StationEntry = {
     id: number;
     name: string;
     aliases: string[];
