@@ -20,11 +20,14 @@ test('renders the correct welcome message', () => {
 });
 
 describe('renders two station selects', () => {
-    const originSelect = screen.getByText(/Origin station:/i);
-    expect(originSelect).toBeInTheDocument();
-
-    const destinationSelect = screen.getByText(/Destination station:/i);
-    expect(destinationSelect).toBeInTheDocument();
+    describe('should render origin station select', () => {
+        const originSelect = screen.getByText(/Origin station:/i);
+        expect(originSelect).toBeInTheDocument();
+    });
+    describe('should render destination station select', () => {
+        const destinationSelect = screen.getByText(/Destination station:/i);
+        expect(destinationSelect).toBeInTheDocument();
+    });
 
     const selectIds = ['origin', 'destination'];
 
