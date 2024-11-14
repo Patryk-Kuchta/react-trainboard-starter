@@ -44,12 +44,12 @@ const SearchPage: React.FC = () => {
                     type = { 'submit' }
                     onClick = { performSearch }
                     disabled = { !inputValid }
-                    data-tooltip-id = { inputValid? '' : 'invalid-advice-tooltip' }
+                    data-tooltip-id = { inputValid ? '' : 'invalid-advice-tooltip' }
                 >
                     Search...
                 </button>
                 <Tooltip
-                    id =  'invalid-advice-tooltip'
+                    id = 'invalid-advice-tooltip'
                     place = 'bottom'
                     variant = 'info'
                     content = 'Please select both valid origin and destination stations.'
