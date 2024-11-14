@@ -14,7 +14,7 @@ const SearchPage: React.FC = () => {
         try {
             window.location.href = `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${originStation}/${destinationStation}/#LiveDepResults`;
         } catch (error) {
-            console.error('Failed to navigate:', error);
+            alert('Failed to open train times. Please try again later.');
         }
     };
 
