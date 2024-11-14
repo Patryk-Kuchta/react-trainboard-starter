@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import moment from 'moment';
 import SearchForm from '../components/SearchForm';
 import MockStationInfoContextProvider, { mockStations } from './helpers/StationInfoContextMock';
 
@@ -10,8 +11,10 @@ global.ResizeObserver = class ResizeObserver {
     disconnect() { /* no-op */ }
 };
 
+const submitSearchMock = jest.fn();
+
 const { getByTestId } = render(<MockStationInfoContextProvider keepEmpty = { false }>
-    <SearchForm submitSearch = { jest.fn() }/>
+    <SearchForm submitSearch = { submitSearchMock }/>
 </MockStationInfoContextProvider>);
 
 test('renders the correct welcome message', () => {
@@ -108,13 +111,37 @@ describe('renders two station selects', () => {
         expect(searchButton).toBeEnabled();
     });
 
+    const dateInput = (getByTestId('datetime_picker') as HTMLInputElement);
+
     describe('with the search button blocked when an invalid date is selected', () => {
-        const dateInput = (getByTestId('datetime_picker') as HTMLInputElement);
-        dateInput.value = '31.02.1998';
-        fireEvent.change(dateInput, { target: { value: dateInput.value } });
+        //dateInput.value = '31.02.1998';
+        fireEvent.change(dateInput, { target: { value: '31.02.1998' } });
         const searchButton = screen.getByText(/Search.../i);
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeDisabled();
+    });
+
+    const futureDate = moment();
+    futureDate.add(10, 'minutes').startOf('minute');
+
+    describe('with the search re-enabled when a valid date is selected', () => {
+        // dateInput.value = futureDate.toISOString().slice(0, 16);
+        fireEvent.change(dateInput, { target: { value: futureDate.toISOString().slice(0, 16) } });
+        const searchButton = screen.getByText(/Search.../i);
+        expect(searchButton).toBeInTheDocument();
+        expect(searchButton).toBeEnabled();
+    });
+
+    describe('with the search button sending the correct details over', () => {
+        const searchButton = screen.getByText(/Search.../i);
+        fireEvent.click(searchButton);
+        expect(submitSearchMock).toBeCalledWith([
+            ['originStation', originSelection],
+            ['destinationStation', destinationSelection],
+            ['outboundDateTime', futureDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')],
+            ['numberOfChildren', '0'],
+            ['numberOfAdults', '1'],
+        ]);
     });
 });
 
