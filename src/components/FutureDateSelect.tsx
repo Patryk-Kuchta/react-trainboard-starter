@@ -37,7 +37,7 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
         } else {
             const dateTimeObject = moment(e.target.value, 'YYYY-MM-DDTHH:mm');
             if (dateTimeObject.isValid()) {
-                const minimalDateTime = moment().add(-15, 'minutes');
+                const minimalDateTime = moment().subtract(15, 'minutes');
 
                 if (dateTimeObject >= minimalDateTime) {
                     setSelectedDate(dateTimeObject);
