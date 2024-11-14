@@ -27,12 +27,28 @@ it('should not allow selecting a past date/time beyond the 15-minute grace perio
     expect(getByText('in the future.')).toBeInTheDocument();
 });
 
-it('should trigger a warning when no date or an invalid date is selected', () => {
+describe('invalid date handling', () => {
+  it('should trigger a warning when no date is selected', () => {
     const { getByTestId, getByText } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
     const dateInput = (getByTestId(test_id) as HTMLInputElement);
     dateInput.value = '';
     fireEvent.change(dateInput, { target: { value: dateInput.value } });
-    expect(getByText('valid date')).toBeInTheDocument();
+    expect(getByText('Please select a valid date')).toBeInTheDocument();
+  });
+
+  it('should trigger a warning for invalid date format', () => {
+    const { getByTestId, getByText } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
+    const dateInput = (getByTestId(test_id) as HTMLInputElement);
+    fireEvent.change(dateInput, { target: { value: 'invalid-date' } });
+    expect(getByText('Please select a valid date')).toBeInTheDocument();
+  });
+
+  it('should trigger a warning for non-existent date', () => {
+    const { getByTestId, getByText } = render(<FutureDateSelect setSelectedDate = { mockedSetSelectedDate } />);
+    const dateInput = (getByTestId(test_id) as HTMLInputElement);
+    fireEvent.change(dateInput, { target: { value: '2024-02-30T12:00' } });
+    expect(getByText('Please select a valid date')).toBeInTheDocument();
+  });
 });
 
 it('should trigger a warning if the selected time becomes outdated after some time', () => {
