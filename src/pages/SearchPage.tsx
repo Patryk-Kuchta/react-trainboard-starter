@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import moment from 'moment';
 import '../style/SearchPage.scss';
 import SearchForm from '../components/SearchForm';
-import { getParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
+import { GetParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
 type FaresResponseType = {
     outboundJourneys: DepartureInfo[];
@@ -31,7 +31,7 @@ const SearchPage: FC = () => {
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
 
-    const submitSearch = (params : getParams) => {
+    const submitSearch = (params : GetParams) => {
         setAwaitingResponse(true);
         setSearchResults(null);
         makeGetRequestWithParams('v1/fares', params).then((response) =>

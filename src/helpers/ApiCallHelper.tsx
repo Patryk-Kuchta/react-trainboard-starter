@@ -1,3 +1,17 @@
+export type GetParams = ([string, string])[];
+
+const validateEnvVars = () => {
+    if (!process.env.REACT_APP_BASE_URL || !process.env.REACT_APP_X_API_KEY) {
+        throw new Error('Required environment variables are not set');
+    }
+};
+
+const validateParams = (params: GetParams) => {
+    return params.every(([key, value]) => {
+        return key.trim() !== '' && value.trim() !== '';
+    });
+};
+
 export const fetchStations = () => {
     return fetch(`${process.env.REACT_APP_BASE_URL}/v1/stations`, {
         headers: {
@@ -6,14 +20,13 @@ export const fetchStations = () => {
     });
 };
 
-export type getParams = ([string, string])[];
+export const makeGetRequestWithParams = (route: string, params: GetParams) => {
+    validateEnvVars();
+    validateParams(params);
 
-export const makeGetRequestWithParams = (route: string, params: getParams) => {
     const paramsString = params.map(([key, value]) => {
         return encodeURI(key) + '=' + encodeURI(value);
     }).join('&');
-
-    console.log(`${process.env.REACT_APP_BASE_URL}/${route}?${paramsString}`);
 
     return fetch(`${process.env.REACT_APP_BASE_URL}/${route}?${paramsString}`, {
         headers: {

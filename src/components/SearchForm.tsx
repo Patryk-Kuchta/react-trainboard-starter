@@ -5,10 +5,10 @@ import '../style/SearchForm.scss';
 import FutureDateSelect from '../components/FutureDateSelect';
 import StationSelect from '../components/StationSelect';
 import { StationInfoContext } from '../contexts/StationInfoContext';
-import { getParams } from '../helpers/ApiCallHelper';
+import { GetParams } from '../helpers/ApiCallHelper';
 
 type SearchFormPrompt = {
-    submitSearch: (params: getParams) => void;
+    submitSearch: (params: GetParams) => void;
 }
 
 const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
