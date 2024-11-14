@@ -26,7 +26,7 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
             inputRef.current.value = formattedDateTime;
             inputRef.current.min = formattedDateTime;
         }
-    }, []);
+    }, [setSelectedDate]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedDate = e.target.value;
