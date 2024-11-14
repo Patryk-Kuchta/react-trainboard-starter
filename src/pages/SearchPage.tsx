@@ -21,12 +21,12 @@ type DepartureInfo = {
 
 const SearchPage: FC = () => {
 
-    const statusToEmoji: Map<Status, string> = new Map([
-        ['normal', '✅'],
-        ['delayed', '⏳'],
-        ['cancelled', '❌'],
-        ['fully_reserved', '🚫'],
-    ]);
+    const statusToEmoji: { [key in Status]: string } = {
+        normal: '✅',
+        delayed: '⏳',
+        cancelled: '❌',
+        fully_reserved: '🚫',
+    };
 
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const SearchPage: FC = () => {
 
                                         <hr/>
 
-                                        Status: {statusToEmoji.get(journey.status)}
+                                        Status: {statusToEmoji[journey.status]}
 
                                         <hr/>
 
