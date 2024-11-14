@@ -38,9 +38,7 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
     };
 
     return (
-        <div
-            id = { 'form' }
-        >
+        <div id = { 'form' }>
             <h1 id = "search-title">Find your next journey...</h1>
             <main role = "main" aria-labelledby = "search-title">
                 <StationSelect
@@ -53,9 +51,7 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
                     invalidSelections = { [originStation] }
                     setSelection = { setDestinationStation }
                 />
-                <FutureDateSelect
-                    setSelectedDate = { setSelectedDate }
-                />
+                <FutureDateSelect setSelectedDate = { setSelectedDate }/>
                 <button
                     type = { 'submit' }
                     onClick = { performSearch }
@@ -68,7 +64,7 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
                     id = 'invalid-advice-tooltip'
                     place = 'bottom'
                     variant = 'info'
-                    content = 'Please select both valid origin and destination stations.'
+                    content = 'Please select a valid origin, destination and a future date.'
                 />
             </main>
         </div>

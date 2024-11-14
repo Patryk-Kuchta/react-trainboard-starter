@@ -42,13 +42,9 @@ const SearchPage: FC = () => {
     };
 
     return (
-        <div
-            id = { 'search_page' }
-        >
+        <div id = { 'search_page' }>
             <SearchForm submitSearch = { submitSearch } />
-            <div
-                id = { 'search_results' }
-            >
+            <div id = { 'search_results' }>
                 {searchResults?
                     <>
                         <h1>Search Results:</h1>

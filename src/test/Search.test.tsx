@@ -52,12 +52,12 @@ describe('renders two station selects', () => {
         const searchButton = screen.getByText(/Search.../i);
 
         // Initially tooltip should not be visible
-        expect(screen.queryByText(/Please select both valid origin and destination stations./i))
+        expect(screen.queryByText(/Please select a valid origin, destination and a future date./i))
             .not.toBeInTheDocument();
 
         // Show tooltip on hover
         fireEvent.mouseOver(searchButton);
-        expect(screen.getByText(/Please select both valid origin and destination stations./i))
+        expect(screen.getByText(/Please select a valid origin, destination and a future date./i))
             .toBeInTheDocument();
     });
 
