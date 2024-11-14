@@ -11,6 +11,10 @@ type SearchFormPrompt = {
     submitSearch: (params: GetParams) => void;
 }
 
+const DEFAULT_CHILDREN = '0';
+const DEFAULT_ADULTS = '1';
+const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
+
 const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
 
     const stationInfoContext = useContext(StationInfoContext);
@@ -30,15 +34,21 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
             submitSearch([
                 ['originStation', originStation],
                 ['destinationStation', destinationStation],
-                ['outboundDateTime', selectedDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')],
-                ['numberOfChildren', '0'],
-                ['numberOfAdults', '1']],
+                ['outboundDateTime', selectedDate.format(DATE_FORMAT)],
+                ['numberOfChildren', DEFAULT_CHILDREN],
+                ['numberOfAdults', DEFAULT_ADULTS]],
             );
         }
     };
 
     return (
-        <div id = { 'form' }>
+        <form
+            id = { 'search_form' }
+            onSubmit = { (e) => {
+                e.preventDefault();
+                performSearch();
+            } }
+        >
             <h1 id = "search-title">Find your next journey...</h1>
             <main role = "main" aria-labelledby = "search-title">
                 <StationSelect
@@ -67,7 +77,7 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
                     content = 'Please select a valid origin, destination and a future date.'
                 />
             </main>
-        </div>
+        </form>
     );
 };
 
