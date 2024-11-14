@@ -24,7 +24,7 @@ const App = () => (
                 </Route>
             </Routes>
             <footer>
-                <hr></hr>
+                <hr/>
                 <Link to = "/stations">Stations</Link>
                 <Link to = "/search">Search</Link>
             </footer>

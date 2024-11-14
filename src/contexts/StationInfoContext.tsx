@@ -17,11 +17,13 @@ type StationEntry = {
 type StationInfoParameters = {
     stations: StationEntry[];
     crsList: string[];
+    isLoading: boolean;
 }
 
-const StationInfoContext = createContext<StationInfoParameters>({
+export const StationInfoContext = createContext<StationInfoParameters>({
     stations: [],
     crsList: [],
+    isLoading: true,
 });
 
 export const StationInfoContextProvider : FC<{children : ReactNode}> = ({ children }) => {
@@ -30,6 +32,7 @@ export const StationInfoContextProvider : FC<{children : ReactNode}> = ({ childr
             {
                 stations: hardCodedStations,
                 crsList: hardCodedStations.map((station) => station.crs),
+                isLoading: false,
             }
         }>
             {children}
@@ -37,4 +40,3 @@ export const StationInfoContextProvider : FC<{children : ReactNode}> = ({ childr
     );
 };
 
-export default StationInfoContext;

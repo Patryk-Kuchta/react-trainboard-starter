@@ -1,5 +1,5 @@
-import React, { FC, useContext } from 'react';
-import StationInfoContext from '../contexts/StationInfoContext';
+import React, { FC, useContext, useEffect } from 'react';
+import { StationInfoContext } from '../contexts/StationInfoContext';
 
 type StationSelectInput = {
     label: string;
@@ -13,10 +13,12 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
 
     const elementId = label.toLowerCase();
 
-    if (stationInfoContext.stations.length === 0) {
-        // reset during loading to prevent unexpected behaviour
-        setSelection('');
-    }
+    useEffect(() => {
+        if (stationInfoContext.stations.length === 0) {
+            // Reset selection when stations are not available to prevent invalid state
+            setSelection('');
+        }
+    }, [stationInfoContext.stations.length, setSelection]);
 
     return <>
         <label htmlFor = { elementId }>{label} station:</label>
@@ -27,19 +29,22 @@ const StationSelect : FC<StationSelectInput> = ({ label, invalidSelections, setS
                 setSelection(event.target.value);
             } }
             disabled = { stationInfoContext.stations.length === 0 }
+            aria-label = { `Select ${label} station` }
             data-testid = { elementId }
+            required = { true }
         >
             {
                 stationInfoContext.stations.length > 0?
                     <>
                         <option value = "">Select...</option>
                         {
-                            stationInfoContext.stations.map((station, key) => {
+                            stationInfoContext.stations.map((station) => {
                                 return (
                                     <option
                                         value = { station.crs }
-                                        key = { key }
+                                        key = { station.crs }
                                         disabled = { invalidSelections.includes(station.crs) }
+                                        aria-invalid = { invalidSelections.includes(station.crs) }
                                     >
                                         {station.name}
                                     </option>);

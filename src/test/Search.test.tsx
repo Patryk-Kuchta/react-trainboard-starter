@@ -45,38 +45,59 @@ describe('renders two station selects', () => {
         expect(searchButton).toBeDisabled();
     });
 
-    describe('with a tooltip attached (on hover only)', () => {
+    describe('with a search button tooltip', () => {
         const searchButton = screen.getByText(/Search.../i);
-        let tooltip = screen.queryByText(/Please select both valid origin and destination stations./i);
-        expect(tooltip).not.toBeInTheDocument();
+
+        // Initially tooltip should not be visible
+        expect(screen.queryByText(/Please select both valid origin and destination stations./i))
+            .not.toBeInTheDocument();
+
+        // Show tooltip on hover
         fireEvent.mouseOver(searchButton);
-        tooltip = screen.getByText(/Please select both valid origin and destination stations./i);
-        expect(tooltip).toBeInTheDocument();
-        fireEvent.mouseLeave(searchButton);
+        expect(screen.getByText(/Please select both valid origin and destination stations./i))
+            .toBeInTheDocument();
     });
 
-    // select an option in each of the select boxes
-    for (const index in selectIds) {
-        const id = selectIds[index];
-        const selection = mockStations[index].crs;
-        const selectElement = screen.getByTestId(id);
-        fireEvent.change(selectElement, { target: { value: selection } });
-    }
+    // select the origin station first
+    const originSelection = 'STA1';
+    let selectElement = screen.getByTestId('origin');
+    fireEvent.change(selectElement, { target: { value: originSelection } });
 
-    describe('with blocking of options that make the journey to the same place', () => {
+    describe('with the search button blocked when only origin is selected', () => {
+        const searchButton = screen.getByText(/Search.../i);
+        expect(searchButton).toBeInTheDocument();
+        expect(searchButton).toBeDisabled();
+    });
 
-        for (const index in selectIds) {
-            const id = selectIds[index];
-            const selectElement = screen.getByTestId(id);
-            for (const stationIndex in mockStations) {
-                const station = mockStations[stationIndex];
-                const stationOption = selectElement.querySelector(`[value="${station.crs}"]`);
-                expect(stationOption).toBeInTheDocument();
-                if (index === stationIndex) {
-                    expect(stationOption).toBeEnabled();
-                } else {
-                    expect(stationOption).toBeDisabled();
-                }
+    // select the destination station
+    const destinationSelection = 'STA2';
+    selectElement = screen.getByTestId('destination');
+    fireEvent.change(selectElement, { target: { value: destinationSelection } });
+
+    describe('with the destination blocked on the origin side', () => {
+        const selectElement = screen.getByTestId('origin');
+        for (const stationIndex in mockStations) {
+            const station = mockStations[stationIndex];
+            const stationOption = selectElement.querySelector(`[value="${station.crs}"]`);
+            expect(stationOption).toBeInTheDocument();
+            if (station.crs !== destinationSelection) {
+                expect(stationOption).toBeEnabled();
+            } else {
+                expect(stationOption).toBeDisabled();
+            }
+        }
+    });
+
+    describe('with the origin blocked on the destination side', () => {
+        const selectElement = screen.getByTestId('destination');
+        for (const stationIndex in mockStations) {
+            const station = mockStations[stationIndex];
+            const stationOption = selectElement.querySelector(`[value="${station.crs}"]`);
+            expect(stationOption).toBeInTheDocument();
+            if (station.crs !== originSelection) {
+                expect(stationOption).toBeEnabled();
+            } else {
+                expect(stationOption).toBeDisabled();
             }
         }
     });
