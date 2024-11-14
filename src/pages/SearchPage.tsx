@@ -52,8 +52,8 @@ const SearchPage: FC = () => {
                         <p>Departure Time ➡️ Arrival Time</p>
                         {
                             searchResults.outboundJourneys.map((journey, key) => {
+                                const arrival = moment(journey.arrivalTime);
                                 const departure = moment(journey.departureTime);
-                                const origin = moment(journey.arrivalTime);
 
                                 return (
                                     <div
@@ -66,7 +66,7 @@ const SearchPage: FC = () => {
 
                                         ➡️
 
-                                        {origin.format('HH:mm')}
+                                        {arrival.format('HH:mm')}
 
                                         <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
 
