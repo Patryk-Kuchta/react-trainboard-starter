@@ -14,7 +14,7 @@ type DepartureInfo = {
     departureTime: string;
     arrivalTime: string;
     status: Status;
-    legs: {'legId': string }[];
+    legs: {length: number}; // only here to access whether it's direct or not (cast from array)
     isFastestJourney: boolean;
     isOvertaken: boolean;
 };
