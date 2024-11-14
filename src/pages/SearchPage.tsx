@@ -1,67 +1,38 @@
-import React, { useContext, useState } from 'react';
-import { Tooltip } from 'react-tooltip';
-import { Moment } from 'moment/moment';
-import FutureDateSelect from '../components/FutureDateSelect';
-import StationSelect from '../components/StationSelect';
-import { StationInfoContext } from '../contexts/StationInfoContext';
+import React, { FC, useState } from 'react';
+import SearchForm from '../components/SearchForm';
+import { getParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
-const SearchPage: React.FC = () => {
+type FaresResponseType = {
+    outboundJourneys: DepartureInfo[];
+}
 
-    const stationInfoContext = useContext(StationInfoContext);
+type DepartureInfo = {
+    departureTime: string;
+    arrivalTime: string;
+    status: string;
+};
 
-    const [originStation, setOriginStation] = useState('');
-    const [destinationStation, setDestinationStation] = useState('');
-    const [selectedDate, setSelectedDate] = useState<Moment | null>(null);
+const SearchPage: FC = () => {
 
-    const performSearch = () => {
-        try {
-            window.location.href = `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${originStation}/${destinationStation}/#LiveDepResults`;
-        } catch (error) {
-            console.error('Failed to navigate:', error);
-        }
+    const [searchResults, setSearchResults] = useState<any>(null); // TODO REMOVE THE ANY IT ONLY A temp!!!
+
+    const submitSearch = (params : getParams) => {
+        makeGetRequestWithParams('v1/fares', params).then((response) =>
+            response.json()).then((body) => {
+            console.log(body);
+            setSearchResults(body);
+        });
     };
-
-    const inputValid = (stationInfoContext.crsList.includes(originStation)
-                        && stationInfoContext.crsList.includes(destinationStation)
-                        && originStation !== destinationStation
-                        && selectedDate);
 
     return (
         <div
-            id = { 'form' }
-            style = { { display: 'flex', flexDirection: 'column', maxWidth: '600px', margin: '0 auto' } }
+            id = { 'search_page' }
+            style = { { display: 'flex', flexDirection: 'row' } }
         >
-            <h1 id = "search-title">Find your next journey...</h1>
-            <main role = "main" aria-labelledby = "search-title">
-                <h1>Find your next journey...</h1>
-                <StationSelect
-                    label = { 'Origin' }
-                    invalidSelections = { [destinationStation] }
-                    setSelection = { setOriginStation }
-                />
-                <StationSelect
-                    label = { 'Destination' }
-                    invalidSelections = { [originStation] }
-                    setSelection = { setDestinationStation }
-                />
-                <FutureDateSelect
-                    setSelectedDate = { setSelectedDate }
-                />
-                <button
-                    type = { 'submit' }
-                    onClick = { performSearch }
-                    disabled = { !inputValid }
-                    data-tooltip-id = { inputValid ? '' : 'invalid-advice-tooltip' }
-                >
-                    Search...
-                </button>
-                <Tooltip
-                    id = 'invalid-advice-tooltip'
-                    place = 'bottom'
-                    variant = 'info'
-                    content = 'Please select both valid origin and destination stations.'
-                />
-            </main>
+            <SearchForm submitSearch = { submitSearch } />
+            <div>
+                Loading...
+            </div>
         </div>
     );
 };

@@ -17,7 +17,10 @@ const FutureDateSelect: FC<FutureDateSelectPrompts> = ({ setSelectedDate }) => {
     const [currentWarning, setCurrentWarning] = useState(Warning.NoWarning);
 
     useEffect(() => {
-        const formattedDateTime = moment().format('YYYY-MM-DDTHH:mm');
+        const now = moment();
+        const formattedDateTime = now.format('YYYY-MM-DDTHH:mm');
+
+        setSelectedDate(now);
         
         if (inputRef.current) {
             inputRef.current.value = formattedDateTime;
