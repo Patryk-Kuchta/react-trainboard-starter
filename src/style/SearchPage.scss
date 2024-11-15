@@ -32,10 +32,16 @@
   background: $input-bg;
   margin: 0.5em;
   padding: 0.5em;
-}
 
-.date {
-  font-size: 0.7em;
+  .datetimes_container {
+    display: flex;
+    flex-direction: row;
+    gap: $smallGap;
+
+    .date {
+      font-size: 0.7em;
+    }
+  }
 }
 
 .loader_container {
@@ -85,4 +91,10 @@
     font-size: 0.9em;
     opacity: 0.9;
   }
+}
+
+.journeys_header {
+  display: flex;
+  gap: $smallGap;
+  justify-content: center;
 }

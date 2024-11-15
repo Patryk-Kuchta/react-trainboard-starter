@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { IoPlayForwardSharp } from 'react-icons/io5';
 import '../style/SearchPage.scss';
 import JourneyDisplay from '../components/JourneyDisplay';
 import SearchForm from '../components/SearchForm';
@@ -44,11 +45,11 @@ const SearchPage: FC = () => {
         <div id = { 'search_page' }>
             <SearchForm submitSearch = { submitSearch } />
             <div id = { 'search_results' }>
-                {searchResults &&
+                {searchResults?.outboundJourneys &&
                     <>
                         <h1>Search Results:</h1>
 
-                        <p>Departure Time ➡️ Arrival Time</p>
+                        <div className = { 'journeys_header' } >Departure Time <IoPlayForwardSharp/> Arrival Time</div>
                         {
                             searchResults.outboundJourneys.map((journey, key) =>
                                 <JourneyDisplay journey = { journey } key = { key }/>,
@@ -72,9 +73,9 @@ const SearchPage: FC = () => {
 
                 }
                 {errorResponse &&
-                    <>
+                    <div className = { 'await_input' }>
                         Error occurred 😭
-                    </>
+                    </div>
                 }
                 {!errorResponse && !awaitingResponse && !searchResults &&
                     <div className = { 'await_input' }>

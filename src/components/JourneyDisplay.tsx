@@ -21,18 +21,20 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
         <div
             className = { 'journey_display' }
         >
-            <div className = { 'datetime_container' }>
-                {departure.format('HH:mm')}
+            <div className = { 'datetimes_container' }>
+                <div className = { 'datetime_container' }>
+                    {departure.format('HH:mm')}
 
-                <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
-            </div>
+                    <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+                </div>
 
-            <IoPlayForwardSharp />
+                <IoPlayForwardSharp/>
 
-            <div className = { 'datetime_container' }>
-                {arrival.format('HH:mm')}
+                <div className = { 'datetime_container' }>
+                    {arrival.format('HH:mm')}
 
-                <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+                    <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+                </div>
             </div>
 
             {journey.status !== 'normal' &&
