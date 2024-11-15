@@ -1,41 +1,29 @@
 :root{
   background: url('background.png');
-  background-size: 100% auto;  /* Stretch image to fit width and height */
+  background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
+  flex: 1 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+footer {
+  border-radius: 3px;
+  padding: 2em;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-direction: row;
+  gap: 15px;
+  background-color: rgba(204, 204, 204, 0.47);
+  width: fit-content;
+  margin: auto auto 1em;
+  flex-shrink: 0;
   color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
+  a {
+    text-decoration: none;
+    color: white;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

@@ -93,21 +93,24 @@ const SearchPage: FC = () => {
                     </>
                 }
                 {awaitingResponse && !errorResponse &&
-                    <div className = { 'loader_container' }>
+                    <>
+                        Searching...
+                        <div className = { 'loader_container' }>
 
-                        <img className = { 'loader first' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
-                        </img>
+                            <img className = { 'loader first' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
+                            </img>
 
-                        <img className = { 'loader second' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
-                        </img>
+                            <img className = { 'loader second' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
+                            </img>
 
-                    </div>
+                        </div>
+                    </>
 
                 }
                 {errorResponse &&
-                <>
-                    Error occurred 😭
-                </>
+                    <>
+                        Error occurred 😭
+                    </>
                 }
                 {!errorResponse && !awaitingResponse && !searchResults &&
                     <div className = { 'await_input' }>
