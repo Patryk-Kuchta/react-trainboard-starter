@@ -93,9 +93,15 @@ const SearchPage: FC = () => {
                     </>
                 }
                 {awaitingResponse && !errorResponse &&
-                        <div className = { 'loader' }>
-                            Loading...
-                        </div>
+                    <div className = { 'loader_container' }>
+
+                        <img className = { 'loader first' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
+                        </img>
+
+                        <img className = { 'loader second' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
+                        </img>
+
+                    </div>
 
                 }
                 {errorResponse &&
@@ -105,7 +111,9 @@ const SearchPage: FC = () => {
                 }
                 {!errorResponse && !awaitingResponse && !searchResults &&
                     <div className = { 'await_input' }>
-                        Select the origin and destination and press search!
+                        <span>Select the origin and destination and press search!</span>
+                        <br/>
+                        <i>Your search results will appear here...</i>
                     </div>
                 }
             </div>

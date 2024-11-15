@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { IoSearchCircle } from 'react-icons/io5';
 import { Tooltip } from 'react-tooltip';
 import { Moment } from 'moment/moment';
 import '../style/SearchForm.scss';
@@ -68,7 +69,8 @@ const SearchForm: React.FC<SearchFormPrompt> = ({ submitSearch }) => {
                     disabled = { !inputValid }
                     data-tooltip-id = { inputValid ? '' : 'invalid-advice-tooltip' }
                 >
-                    Search...
+                    <IoSearchCircle/>
+                    <span className = { 'title' }>Search...</span>
                 </button>
                 <Tooltip
                     id = 'invalid-advice-tooltip'

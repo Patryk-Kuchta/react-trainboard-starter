@@ -1,4 +1,7 @@
-.App {
+:root{
+  background: url('background.png');
+  background-size: 100% auto;  /* Stretch image to fit width and height */
+  background-repeat: no-repeat;
   text-align: center;
 }
 
