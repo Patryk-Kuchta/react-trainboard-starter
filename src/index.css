@@ -12,16 +12,20 @@ code {
     monospace;
 }
 
-body, html {
-  height: 100%;
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: inherit;
 }
 
 #root {
-  height: 100%;
+  min-height: inherit;
 }
 
 .App {
-  height: 100%;
+  min-height: inherit;
   display: flex;
   flex-direction: column;
 }
