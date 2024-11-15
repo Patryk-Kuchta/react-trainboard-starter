@@ -1,13 +1,4 @@
-:root {
-  --background-gradient: linear-gradient(148deg, rgba(56, 0, 0, 0.8) 0%, rgba(94, 9, 121, 0.76) 42%, rgba(0, 212, 255, 0.69) 100%);
-  --box-shadow-primary: 0 8px 15px rgba(0, 0, 0, 0.3);
-  --box-shadow-secondary: 0 4px 6px rgba(0, 0, 0, 0.2);
-  --input-bg: rgba(204, 204, 204, 0.59);
-  --border-radius: 5px;
-  --warning-color: #7e1111;
-  --padding: 2em;
-  --gap: 60px;
-}
+@import 'constants';
 
 #search_form {
   display: flex;
@@ -16,10 +7,10 @@
   margin: 2em auto;
   height: fit-content;
   color: white;
-  padding: var(--padding);
-  background: var(--background-gradient);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-primary), var(--box-shadow-secondary);
+  padding: $padding;
+  background: $background-gradient;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-primary, $box-shadow-secondary;
 
   #search-title {
     font-size: 1.4em;
@@ -44,7 +35,7 @@
 .station_select {
   display: flex;
   flex-direction: row;
-  gap: var(--gap);
+  gap: $gap;
   justify-content: space-between;
 
   select {
@@ -53,7 +44,7 @@
     border: none;
     border-radius: 3px;
     width: 20em;
-    background-color: var(--input-bg);
+    background-color: $input-bg;
   }
 }
 
@@ -66,12 +57,12 @@
     border: none;
     border-radius: 3px;
     width: 19.7em;
-    background-color: var(--input-bg);
+    background-color: $input-bg;
   }
 }
 
 .warning-message {
-  color: var(--warning-color);
+  color: $warning-color;
   display: none;
 
   &.visible {

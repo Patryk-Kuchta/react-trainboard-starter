@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import './App.css';
+import './style/App.scss';
 import Station from './components/Station';
 import { StationInfoContextProvider } from './contexts/StationInfoContext';
 import SearchPage from './pages/SearchPage';
