@@ -17,6 +17,15 @@ render(<MockStationInfoContextProvider keepEmpty = { false }>
     <SearchForm submitSearch = { submitSearchMock }/>
 </MockStationInfoContextProvider>);
 
+const getTheSearchButton = () => {
+    const searchButton = screen.getByText(/Search.../i).parentElement;
+    if (searchButton) {
+        return searchButton;
+    } else {
+        throw new Error('Search button now found!');
+    }
+};
+
 test('renders the correct welcome message', () => {
     const welcomeMessage = screen.getByText(/Find your next journey.../i);
     expect(welcomeMessage).toBeInTheDocument();
@@ -43,13 +52,13 @@ describe('renders two station selects', () => {
     });
 
     describe('with the search button initially blocked', () => {
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeDisabled();
     });
 
     describe('with a search button tooltip', () => {
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
 
         // Initially tooltip should not be visible
         expect(screen.queryByText(/Please select a valid origin, destination and a future date./i))
@@ -67,7 +76,7 @@ describe('renders two station selects', () => {
     fireEvent.change(selectElement, { target: { value: originSelection } });
 
     describe('with the search button blocked when only origin is selected', () => {
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeDisabled();
     });
@@ -106,7 +115,7 @@ describe('renders two station selects', () => {
     });
 
     describe('with the search button unblocked after selection', () => {
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeEnabled();
     });
@@ -116,7 +125,7 @@ describe('renders two station selects', () => {
     describe('with the search button blocked when an invalid date is selected', () => {
         //dateInput.value = '31.02.1998';
         fireEvent.change(dateInput, { target: { value: '31.02.1998' } });
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeDisabled();
     });
@@ -127,13 +136,13 @@ describe('renders two station selects', () => {
     describe('with the search re-enabled when a valid date is selected', () => {
         // dateInput.value = futureDate.toISOString().slice(0, 16);
         fireEvent.change(dateInput, { target: { value: futureDate.toISOString().slice(0, 16) } });
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         expect(searchButton).toBeInTheDocument();
         expect(searchButton).toBeEnabled();
     });
 
     describe('with the search button sending the correct details over', () => {
-        const searchButton = screen.getByText(/Search.../i);
+        const searchButton = getTheSearchButton();
         fireEvent.click(searchButton);
         expect(submitSearchMock).toBeCalledWith([
             ['originStation', originSelection],
