@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
-import moment from 'moment';
 import '../style/SearchPage.scss';
+import JourneyDisplay from '../components/JourneyDisplay';
 import SearchForm from '../components/SearchForm';
 import { GetParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
@@ -8,9 +8,9 @@ type FaresResponseType = {
     outboundJourneys: DepartureInfo[];
 }
 
-type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
+export type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
-type DepartureInfo = {
+export type DepartureInfo = {
     departureTime: string;
     arrivalTime: string;
     status: Status;
@@ -20,13 +20,6 @@ type DepartureInfo = {
 };
 
 const SearchPage: FC = () => {
-
-    const statusToEmoji: { [key in Status]: string } = {
-        normal: '✅',
-        delayed: '⏳',
-        cancelled: '❌',
-        fully_reserved: '🚫',
-    };
 
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
@@ -57,38 +50,9 @@ const SearchPage: FC = () => {
 
                         <p>Departure Time ➡️ Arrival Time</p>
                         {
-                            searchResults.outboundJourneys.map((journey, key) => {
-                                const arrival = moment(journey.arrivalTime);
-                                const departure = moment(journey.departureTime);
-
-                                return (
-                                    <div
-                                        className = { 'journeyDisplay' }
-                                        key = { key }
-                                    >
-                                        {departure.format('HH:mm')}
-
-                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
-
-                                        ➡️
-
-                                        {arrival.format('HH:mm')}
-
-                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
-
-                                        <hr/>
-
-                                        Status: {statusToEmoji[journey.status]}
-
-                                        <hr/>
-
-                                        <b>
-                                            {journey.legs.length === 1 ? 'Direct' : `${journey.legs.length - 1} change`}
-                                        </b>
-
-                                    </div>
-                                );
-                            })
+                            searchResults.outboundJourneys.map((journey, key) =>
+                                <JourneyDisplay journey = { journey } key = { key }/>,
+                            )
                         }
                     </>
                 }
