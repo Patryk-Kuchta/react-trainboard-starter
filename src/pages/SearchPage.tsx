@@ -23,8 +23,18 @@ type legInfo = {
 }
 
 export type DepartureInfo = {
+    originStation: {
+        displayName: string;
+        crs: string;
+    };
+    destinationStation: {
+        displayName: string;
+        crs: string;
+    };
     departureTime: string;
+    departureRealTime: string;
     arrivalTime: string;
+    arrivalRealTime: string;
     status: Status;
     legs: legInfo[];
     isFastestJourney: boolean;

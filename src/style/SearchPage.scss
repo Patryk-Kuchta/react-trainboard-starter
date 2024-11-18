@@ -26,6 +26,7 @@
 }
 
 .journey_display {
+  border-radius: $border-radius;
   border-width: 1px;
   border-style: solid;
   border-color: $gray-light;
@@ -33,12 +34,13 @@
   margin: 0.5em;
   padding: 0.5em;
 
-  .datetimes_container {
+  .depart_arrive_container {
     display: flex;
+    justify-content: center;
     flex-direction: row;
     gap: $smallGap;
 
-    .date {
+    .detail {
       font-size: 0.7em;
     }
   }

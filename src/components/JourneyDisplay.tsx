@@ -41,19 +41,37 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
         <div
             className = { 'journey_display' }
         >
-            <div className = { 'datetimes_container' }>
-                <div className = { 'datetime_container' }>
-                    {departure.format('HH:mm')}
+            <div className = { 'depart_arrive_container' }>
+                <div className = { 'side_container' }>
+                    {journey.destinationStation.crs}
 
-                    <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+                    <span className = { 'detail' }> {journey.destinationStation.displayName}</span>
                 </div>
 
                 <IoPlayForwardSharp/>
 
-                <div className = { 'datetime_container' }>
+                <div className = { 'side_container' }>
+                    {journey.originStation.crs}
+
+                    <span className = { 'detail' }> {journey.originStation.displayName}</span>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div className = { 'depart_arrive_container' }>
+                <div className = { 'side_container' }>
+                    {departure.format('HH:mm')}
+
+                    <span className = { 'detail' }> {departure.format('DD MMM YY')}</span>
+                </div>
+
+                <IoPlayForwardSharp/>
+
+                <div className = { 'detail_container' }>
                     {arrival.format('HH:mm')}
 
-                    <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
+                    <span className = { 'detail' }> {departure.format('DD MMM YY')}</span>
                 </div>
             </div>
 
