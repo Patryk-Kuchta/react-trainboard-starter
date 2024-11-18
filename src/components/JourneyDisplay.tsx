@@ -8,10 +8,26 @@ import { DepartureInfo, Status } from '../pages/SearchPage';
 const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
 
     const statusToEmoji: { [key in Status]: ReactNode } = {
-        normal: <><IoCheckboxOutline /> normal. </>,
-        delayed: <><IoTimerOutline /> This train is <b>delayed</b>. </>,
-        cancelled: <><ImCancelCircle /> This train is <b>cancelled</b>. </>,
-        fully_reserved: <><MdGroupOff /> This train is <b>sold out</b>. </>,
+        normal: (
+            <>
+                <IoCheckboxOutline /> normal.
+            </>
+        ),
+        delayed: (
+            <>
+                <IoTimerOutline /> This train is <b>delayed</b>.
+            </>
+        ),
+        cancelled: (
+            <>
+                <ImCancelCircle /> This train is <b>cancelled</b>.
+            </>
+        ),
+        fully_reserved: (
+            <>
+                <MdGroupOff /> This train is <b>sold out</b>.
+            </>
+        ),
     };
 
     const toOrdinal = (n: number): string => {
@@ -43,17 +59,17 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
         >
             <div className = { 'depart_arrive_container' }>
                 <div className = { 'side_container' }>
-                    {journey.destinationStation.crs}
+                    {journey.originStation.crs}
 
-                    <span className = { 'detail' }> {journey.destinationStation.displayName}</span>
+                    <span className = { 'detail' }> {journey.originStation.displayName}</span>
                 </div>
 
                 <IoPlayForwardSharp/>
 
                 <div className = { 'side_container' }>
-                    {journey.originStation.crs}
+                    {journey.destinationStation.crs}
 
-                    <span className = { 'detail' }> {journey.originStation.displayName}</span>
+                    <span className = { 'detail' }> {journey.destinationStation.displayName}</span>
                 </div>
             </div>
 
