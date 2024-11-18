@@ -62,7 +62,8 @@
 }
 
 .warning-message {
-  color: $warning-color;
+  color: $white;
+  text-decoration: underline;
   display: none;
 
   &.visible {
