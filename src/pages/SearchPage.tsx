@@ -11,7 +11,7 @@ type FaresResponseType = {
 
 export type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
-type legInfo = {
+type LegInfo = {
     origin: {
         displayName: string;
         crs: string;
@@ -36,7 +36,7 @@ export type DepartureInfo = {
     arrivalTime: string;
     arrivalRealTime: string;
     status: Status;
-    legs: legInfo[];
+    legs: LegInfo[];
     isFastestJourney: boolean;
     isOvertaken: boolean;
 };
