@@ -107,9 +107,9 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
                     Direct
                 </b>
                 :
-                journey.legs.slice(0, -1).map((leg, key) =>
-                    <div key = { key } className = { 'change_info' }>
-                        <i>{toOrdinal(key + 1)} change at</i> {leg.destination.displayName}
+                journey.legs.slice(0, -1).map((leg, index) =>
+                    <div key = { `leg ${leg.legId}` } className = { 'change_info' }>
+                        <i>{toOrdinal(index + 1)} change at</i> {leg.destination.displayName}
                     </div>)
             }
 

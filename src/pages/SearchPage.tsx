@@ -12,6 +12,7 @@ type FaresResponseType = {
 export type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
 type LegInfo = {
+    legId: string;
     origin: {
         displayName: string;
         crs: string;
@@ -23,6 +24,7 @@ type LegInfo = {
 }
 
 export type DepartureInfo = {
+    journeyId: string;
     originStation: {
         displayName: string;
         crs: string;
@@ -72,8 +74,8 @@ const SearchPage: FC = () => {
 
                         <div className = { 'journeys_header' } >Departure Time <IoPlayForwardSharp/> Arrival Time</div>
                         {
-                            searchResults.outboundJourneys.map((journey, key) =>
-                                <JourneyDisplay journey = { journey } key = { key }/>,
+                            searchResults.outboundJourneys.map((journey) =>
+                                <JourneyDisplay journey = { journey } key = { `journey ${journey.journeyId}` }/>,
                             )
                         }
                     </>
@@ -83,8 +85,7 @@ const SearchPage: FC = () => {
                         Searching...
                         <div className = { 'loader_container' }>
 
-                            <img className = { 'loader' } src = { 'loader.png' } alt = { 'Loading...' }>
-                            </img>
+                            <img className = { 'loader' } src = { 'loader.png' } alt = { 'Loading...' }/>
 
                         </div>
                     </>
