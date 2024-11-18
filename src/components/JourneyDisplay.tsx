@@ -54,7 +54,9 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
     const departure = moment(journey.departureTime);
 
     return (
-        <div
+        <section
+            role = "region"
+            aria-label = "Journey Details"
             className = { 'journey_display' }
         >
             <div className = { 'depart_arrive_container' }>
@@ -113,7 +115,7 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
                     </div>)
             }
 
-        </div>
+        </section>
     );
 };
 
