@@ -94,7 +94,9 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
             {journey.status !== 'normal' &&
                 <>
                     <hr/>
-                    {statusToEmoji[journey.status]}
+                    <span role = "status">
+                        {statusToEmoji[journey.status]}
+                    </span>
                 </>}
 
             <hr/>
