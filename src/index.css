@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: inherit;
+}
+
+#root {
+  min-height: inherit;
+}
+
+.App {
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+}

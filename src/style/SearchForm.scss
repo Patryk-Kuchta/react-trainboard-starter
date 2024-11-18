@@ -1,38 +1,82 @@
+@import 'constants';
+
 #search_form {
   display: flex;
   flex-direction: column;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 2em auto;
+  height: fit-content;
+  color: white;
+  padding: $padding;
+  background: $background-gradient;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-primary, $box-shadow-secondary;
+
+  #search-title {
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+  }
+
+  button {
+    margin: 1em auto 0;
+    font-size: 1.3em;
+    display: flex;
+
+    title {
+      margin-top: 0.2em;
+    }
+
+    svg {
+      margin-top: 0.1em;
+    }
+  }
 }
 
 .station_select {
   display: flex;
   flex-direction: row;
+  gap: $gap;
   justify-content: space-between;
+
+  select {
+    padding: 2px;
+    margin-bottom: 0.3em;
+    border: none;
+    border-radius: 3px;
+    width: 20em;
+    background-color: $input-bg;
+  }
 }
 
 .datetime_picker_container {
   display: flex;
   justify-content: space-between;
+
+  input {
+    padding: 2px;
+    border: none;
+    border-radius: 3px;
+    width: 19.7em;
+    background-color: $input-bg;
+  }
 }
 
 .warning-message {
-  color: #7e1111;
+  color: $white;
   display: none;
+
+  &.visible {
+    display: block;
+  }
 }
 
-.warning-message.visible {
-  display: block;
-}
+.date_warning_span {
+  &::before,
+  &::after {
+    content: " ";
+  }
 
-.date_warning_span::before {
-  content: " ";
-}
-
-.date_warning_span::after {
-  content: " ";
-}
-
-.date_warning_span.highlight {
-  font-weight: bold;
+  &.highlight {
+    font-weight: bold;
+  }
 }

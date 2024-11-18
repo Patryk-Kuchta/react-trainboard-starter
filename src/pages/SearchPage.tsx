@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
-import moment from 'moment';
+import { IoPlayForwardSharp } from 'react-icons/io5';
 import '../style/SearchPage.scss';
+import JourneyDisplay from '../components/JourneyDisplay';
 import SearchForm from '../components/SearchForm';
 import { GetParams, makeGetRequestWithParams } from '../helpers/ApiCallHelper';
 
@@ -8,25 +9,41 @@ type FaresResponseType = {
     outboundJourneys: DepartureInfo[];
 }
 
-type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
+export type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
-type DepartureInfo = {
+type LegInfo = {
+    legId: string;
+    origin: {
+        displayName: string;
+        crs: string;
+    };
+    destination: {
+        displayName: string;
+        crs: string;
+    };
+}
+
+export type DepartureInfo = {
+    journeyId: string;
+    originStation: {
+        displayName: string;
+        crs: string;
+    };
+    destinationStation: {
+        displayName: string;
+        crs: string;
+    };
     departureTime: string;
+    departureRealTime: string;
     arrivalTime: string;
+    arrivalRealTime: string;
     status: Status;
-    legs: {length: number}; // only here to access whether it's direct or not (cast from array)
+    legs: LegInfo[];
     isFastestJourney: boolean;
     isOvertaken: boolean;
 };
 
 const SearchPage: FC = () => {
-
-    const statusToEmoji: { [key in Status]: string } = {
-        normal: '✅',
-        delayed: '⏳',
-        cancelled: '❌',
-        fully_reserved: '🚫',
-    };
 
     const [searchResults, setSearchResults] = useState<FaresResponseType | null>(null);
     const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
@@ -34,6 +51,7 @@ const SearchPage: FC = () => {
 
     const submitSearch = async (params : GetParams) => {
         setAwaitingResponse(true);
+        setErrorResponse(false);
         setSearchResults(null);
         try {
             const response = await makeGetRequestWithParams('v1/fares', params);
@@ -51,61 +69,39 @@ const SearchPage: FC = () => {
         <div id = { 'search_page' }>
             <SearchForm submitSearch = { submitSearch } />
             <div id = { 'search_results' }>
-                {searchResults &&
+                {searchResults?.outboundJourneys &&
                     <>
                         <h1>Search Results:</h1>
 
-                        <p>Departure Time ➡️ Arrival Time</p>
+                        <div className = { 'journeys_header' } >Departure Time <IoPlayForwardSharp/> Arrival Time</div>
                         {
-                            searchResults.outboundJourneys.map((journey, key) => {
-                                const arrival = moment(journey.arrivalTime);
-                                const departure = moment(journey.departureTime);
-
-                                return (
-                                    <div
-                                        className = { 'journeyDisplay' }
-                                        key = { key }
-                                    >
-                                        {departure.format('HH:mm')}
-
-                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
-
-                                        ➡️
-
-                                        {arrival.format('HH:mm')}
-
-                                        <span className = { 'date' }> {departure.format('DD MMM YY')}</span>
-
-                                        <hr/>
-
-                                        Status: {statusToEmoji[journey.status]}
-
-                                        <hr/>
-
-                                        <b>
-                                            {journey.legs.length === 1 ? 'Direct' : `${journey.legs.length - 1} change`}
-                                        </b>
-
-                                    </div>
-                                );
-                            })
+                            searchResults.outboundJourneys.map((journey) =>
+                                <JourneyDisplay journey = { journey } key = { `journey ${journey.journeyId}` }/>,
+                            )
                         }
                     </>
                 }
                 {awaitingResponse && !errorResponse &&
-                        <div className = { 'loader' }>
-                            Loading...
+                    <>
+                        Searching...
+                        <div className = { 'loader_container' }>
+
+                            <img className = { 'loader' } src = { 'loader.png' } alt = { 'Loading...' }/>
+
                         </div>
+                    </>
 
                 }
                 {errorResponse &&
-                <>
-                    Error occurred 😭
-                </>
+                    <div className = { 'await_input' }>
+                        Error occurred 😭
+                    </div>
                 }
                 {!errorResponse && !awaitingResponse && !searchResults &&
                     <div className = { 'await_input' }>
-                        Select the origin and destination and press search!
+                        <span>Select the origin and destination and press search!</span>
+                        <br/>
+                        <i>Your search results will appear here...</i>
                     </div>
                 }
             </div>
