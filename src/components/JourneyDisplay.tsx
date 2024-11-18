@@ -14,6 +14,26 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
         fully_reserved: <><MdGroupOff /> This train is <b>sold out</b>. </>,
     };
 
+    const toOrdinal = (n: number): string => {
+        const remainder10 = n % 10;
+        const remainder100 = n % 100;
+
+        if (remainder100 >= 11 && remainder100 <= 13) {
+            return `${n}th`;
+        }
+
+        switch (remainder10) {
+        case 1:
+            return `${n}st`;
+        case 2:
+            return `${n}nd`;
+        case 3:
+            return `${n}rd`;
+        default:
+            return `${n}th`;
+        }
+    };
+
     const arrival = moment(journey.arrivalTime);
     const departure = moment(journey.departureTime);
 
@@ -45,9 +65,17 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
 
             <hr/>
 
-            <b>
-                {journey.legs.length === 1 ? 'Direct' : `${journey.legs.length - 1} change`}
-            </b>
+            {journey.legs.length === 1 ?
+
+                <b>
+                    Direct
+                </b>
+                :
+                journey.legs.slice(0, -1).map((leg, key) =>
+                    <div key = { key } className = { 'change_info' }>
+                        <i>{toOrdinal(key + 1)} change at</i> {leg.destination.displayName}
+                    </div>)
+            }
 
         </div>
     );
