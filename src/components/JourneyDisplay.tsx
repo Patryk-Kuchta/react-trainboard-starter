@@ -71,7 +71,7 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
                 <div className = { 'detail_container' }>
                     {arrival.format('HH:mm')}
 
-                    <span className = { 'detail' }> {departure.format('DD MMM YY')}</span>
+                    <span className = { 'detail' }> {arrival.format('DD MMM YY')}</span>
                 </div>
             </div>
 
