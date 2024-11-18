@@ -34,11 +34,24 @@
   margin: 0.5em;
   padding: 0.5em;
 
+  &.cancelled, &.fully_reserved{
+    opacity: 60%;
+  }
+
   .depart_arrive_container {
     display: flex;
     justify-content: center;
     flex-direction: row;
     gap: $smallGap;
+
+    &.delayed {
+      text-decoration: line-through;
+      font-size: 0.9em;
+    }
+
+    &.live {
+      font-weight: bold;
+    }
 
     .detail {
       font-size: 0.7em;

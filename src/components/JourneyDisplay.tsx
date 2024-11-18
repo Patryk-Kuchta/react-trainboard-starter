@@ -53,11 +53,14 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
     const arrival = moment(journey.arrivalTime);
     const departure = moment(journey.departureTime);
 
+    const liveArrival = moment(journey.arrivalRealTime);
+    const liveDeparture = moment(journey.departureRealTime);
+
     return (
         <section
             role = "region"
             aria-label = "Journey Details"
-            className = { 'journey_display' }
+            className = { ['journey_display', journey.status].join(' ') }
         >
             <div className = { 'depart_arrive_container' }>
                 <div className = { 'side_container' }>
@@ -76,8 +79,28 @@ const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
             </div>
 
             <hr/>
+            {
+                journey.status === 'delayed' &&
+                <>
+                    <div className = { ['depart_arrive_container', 'live'].join(' ') }>
+                        <div className = { 'side_container' }>
+                            {liveDeparture.format('HH:mm')}
 
-            <div className = { 'depart_arrive_container' }>
+                            <span className = { 'detail' }> {liveDeparture.format('DD MMM YY')}</span>
+                        </div>
+
+                        <IoPlayForwardSharp/>
+
+                        <div className = { 'detail_container' }>
+                            {liveArrival.format('HH:mm')}
+
+                            <span className = { 'detail' }> {liveArrival.format('DD MMM YY')}</span>
+                        </div>
+                    </div>
+                </>
+            }
+
+            <div className = { ['depart_arrive_container', journey.status].join(' ') }>
                 <div className = { 'side_container' }>
                     {departure.format('HH:mm')}
 
