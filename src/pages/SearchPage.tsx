@@ -51,6 +51,7 @@ const SearchPage: FC = () => {
 
     const submitSearch = async (params : GetParams) => {
         setAwaitingResponse(true);
+        setErrorResponse(false);
         setSearchResults(null);
         try {
             const response = await makeGetRequestWithParams('v1/fares', params);
