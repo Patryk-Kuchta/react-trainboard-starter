@@ -11,11 +11,22 @@ type FaresResponseType = {
 
 export type Status = 'normal' | 'delayed' | 'cancelled' | 'fully_reserved';
 
+type legInfo = {
+    origin: {
+        displayName: string;
+        crs: string;
+    };
+    destination: {
+        displayName: string;
+        crs: string;
+    };
+}
+
 export type DepartureInfo = {
     departureTime: string;
     arrivalTime: string;
     status: Status;
-    legs: {length: number}; // only here to access whether it's direct or not (cast from array)
+    legs: legInfo[];
     isFastestJourney: boolean;
     isOvertaken: boolean;
 };
@@ -62,10 +73,7 @@ const SearchPage: FC = () => {
                         Searching...
                         <div className = { 'loader_container' }>
 
-                            <img className = { 'loader first' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
-                            </img>
-
-                            <img className = { 'loader second' } src = { 'train-stripe.png' } alt = { 'Loading...' }>
+                            <img className = { 'loader' } src = { 'loader.png' } alt = { 'Loading...' }>
                             </img>
 
                         </div>

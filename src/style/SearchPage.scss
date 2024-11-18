@@ -52,26 +52,17 @@
 }
 
 .loader {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
   background-size: cover;
   position: absolute;
+  transform-origin: center;
   top: 0;
   left: 0;
-  transform-origin: bottom right;
-}
+  width: 100%;
 
-.loader.first {
-  rotate: 90deg;
+  opacity: 80%;
+  rotate: 30deg;
   animation: rotation 1s linear infinite;
   z-index: 1;
-}
-
-.loader.second {
-  transform: scaleX(-1);
-  animation: rotation 1s linear infinite reverse;
-  z-index: 0;
 }
 
 @keyframes rotation {
