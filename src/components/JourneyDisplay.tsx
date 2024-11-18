@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import { ImCancelCircle } from 'react-icons/im';
 import { IoCheckboxOutline, IoPlayForwardSharp, IoTimerOutline } from 'react-icons/io5';
 import { MdGroupOff } from 'react-icons/md';
-import moment from 'moment/moment';
+import moment from 'moment';
 import { DepartureInfo, Status } from '../pages/SearchPage';
 
 const JourneyDisplay : FC<{journey: DepartureInfo}> = ({ journey }) => {
